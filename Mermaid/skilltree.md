@@ -13,5 +13,6 @@ flowchart TD
     
     AlgorithmBasic --> Algo_BinarySearch[二分查找 ⭐⭐☆☆☆]
     
-    click Algo_BinarySearch "file:///Users/yangyang/workspace/skilltree/skill-tree/basic/work/AlgorithmBasic/Algo_BinarySearch/Summary.md" "打开二分查找题解"
+    %% 添加超链接：点击节点打开对应的 Summary.md
+    click Algo_BinarySearch "basic/work/AlgorithmBasic/Algo_BinarySearch/Summary.md" "打开二分查找题解"
 ```
