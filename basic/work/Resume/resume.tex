@@ -1,0 +1,132 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+% !Mode:: "TeX:UTF-8"
+
+\documentclass{resume}
+\usepackage{zh_CN-Adobefonts_external}
+\usepackage{linespacing_fix}
+\usepackage{multicol}
+\usepackage{vwcol}
+\usepackage{xcolor}
+\usepackage{geometry}
+
+\definecolor{color1}{RGB}{44,62,80}
+\definecolor{color2}{RGB}{54,133,202}
+\definecolor{color3}{RGB}{238,238,238}
+
+\geometry{left=1.5cm, right=1.5cm, top=1.0cm, bottom=1.0cm}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\begin{center}
+    {\fontsize{26pt}{28pt}\selectfont\textbf{\textcolor{color1}{杨\hspace{0.8em}洋}}}\\[0.3em]
+    {\color{black}\hrule height 0.4pt}
+\end{center}
+
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}l@{\extracolsep{\fill}}l@{}}
+  \textbf{联系方式}: 131-7510-9187 & \textbf{电子邮箱}: yy1921rz@126.com & \textbf{求职意向}: \textbf{嵌入式软件开发}
+\end{tabular*}
+
+% ================= 1. 技能 =================
+\section{\textcolor{color2}{技能}}
+\begin{itemize}
+\setlength\itemsep{0.3em}
+    \item \textbf{嵌入式 Linux}：ARM（RK / HiSilicon）、X86 平台开发与适配；交叉编译、部署与系统联调
+    \item \textbf{多媒体/图像链路}：显示与图像处理业务流程；音视频编解码相关模块对接与验证
+    \item \textbf{性能优化}：Profiling（perf/valgrind）、Cache/访存分析、并行化（OpenMP）、SIMD（RK NEON / X86 AVX2）
+    \item \textbf{工程化与质量}: 冒烟/自动化回归测试框架建设；GDB 定位与问题修复。
+    \item \textbf{工具/语言}: C/C++（主力）、Python/Shell；GCC/Clang、CMake/Make、GDB。
+\end{itemize}
+
+% ================= 2. 工作经历 =================
+\section{\textcolor{color2}{工作经历}}
+
+\noindent\textbf{海康睿影科技有限公司} \hfill \textbf{嵌入式软件开发工程师} \hfill \textbf{2022.12-至今}
+
+\begin{itemize}
+\setlength\itemsep{0.5em}
+  \item \textbf{工作概述}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.5em}
+      \item 负责嵌入式/图像安检设备的软件与算法落地，覆盖显示、音视频编解码、成像与图像处理算法处理流程；支撑系统级冒烟测试与自动化回归。深度参与多项安检成像核心算法工程化（脏图矫正、背散射、双能着色、灰度曲线等），并承担性能优化、问题定位、跨团队联调与定制开发。
+      \item 绩效：2023 年度良好；年度/季度多次良好。
+  \end{itemize}
+
+  \item \textbf{测试框架搭建：系统验证流程建设}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.3em}
+  \item 基于 C/C++ 搭建 DSP TTK 测试框架，覆盖显示、音视频编解码及 XSP 算法模块的核心验证能力。
+  \item 建立系统层 DSP 冒烟测试与自动化回归流程，提升回归效率与覆盖率（减少人工回归投入）。
+  \end{itemize}
+
+  \item \textbf{成像质量提升：脏图矫正算法设计与量产落地（专利）}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.3em}
+  \item 针对射线源波动引发的靶点偏移、高低能信号波动导致的“脏图”问题，设计并实现基于形态学的自动矫正算法。
+  \item 在满载数据场景下实现自动修正并稳定应用于设备量产，显著提升成像一致性与可靠性。
+  \item 技术成果：发明专利 1 篇（受理中）。
+  \end{itemize}
+
+  \item \textbf{背散射成像算法工程化落地（从原型到产品适配）}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.3em}
+  \item 参与背散射成像算法产品化，完成前级物理特性校正、后级降噪/增强链路的工程适配。
+  \item 负责畸变校正、比例调整等模块开发，确保在安检设备中的稳定性与成像质量。
+  \end{itemize}
+
+  \item \textbf{双能成像着色：颜色表校正工具开发（提升调参效率）}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.3em}
+  \item 开发双能颜色表调整工具：基于 HSL 色彩空间与标定得到的 R 曲线完成颜色表校正与调整。
+  \item 提供可视化配置能力，提升技术支持与客户在颜色风格沟通/调优中的一致性与效率。
+  \end{itemize}
+
+  \item \textbf{灰度风格拟合与迁移（友商风格对齐）}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.3em}
+  \item 建模高穿/低穿“增亮减暗”灰度曲线并完成效果调校，实现图像灰度风格的拟合与迁移。
+  \item 支撑客户从友商设备到公司设备的图像风格平滑切换，降低适配成本。
+  \end{itemize}
+
+ \item \textbf{定制化难穿区识别与画框高亮}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.3em}
+  \item 实现“难穿区”大小识别与画框高亮显示，支持重点区域自动检测/框选/强调。
+  \item 支撑不同客户差异化需求，提高复杂场景可用性。
+  \end{itemize}
+
+   \item \textbf{CPU 侧全屏成像链路性能优化（关键量化成果）}
+  \begin{itemize}
+  \small
+  \setlength\itemsep{0.3em}
+  \item 主导全屏成像处理链路优化：结合 Cache 命中分析、并行化与指令级优化，重构关键路径。
+  \item 引入 OpenMP 并行化 + SIMD 等手段实现显著加速：X86：单帧约 500ms → 约 30ms；RK：单帧约 500ms → 约 70ms。
+  \item 同时承担算法模块维护、基线测试、问题定位与 Bug 修复；版本交付稳定，内存较之前版本节省约 100MB。
+  \end{itemize}
+\end{itemize}
+
+\vspace{0.5em}
+\noindent\textbf{华航高科} \hfill \textbf{嵌入式软件开发工程师} \hfill \textbf{2021.07-2022.12}
+
+\begin{itemize}
+\setlength\itemsep{0.5em}
+  \item \small 负责 RK3588 COM-E 及异形板卡的外设裁剪、板级适配与相关驱动开发。
+  \item \small 使用 GStreamer 构建音视频链路，基于 V4L2 进行摄像头调试，并参与摄像头设备树、驱动编写与问题定位。
+\end{itemize}
+
+% ================= 3. 教育经历 =================
+\section{\textcolor{color2}{教育经历}}
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}l@{\extracolsep{\fill}}r@{}}
+  \textbf{华北电力大学} & \textbf{电子信息硕士学位（非全日制）} & 2021.08-2024.06 \\
+  \textbf{东北林业大学}           & \textbf{计算机科学与技术学士学位} & 2017.09-2021.06
+\end{tabular*}
+
+\end{document}

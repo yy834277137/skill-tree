@@ -1,0 +1,51 @@
+/*
+ *  Template:1
+ * 
+ * 
+*/
+
+start = 0; end = len - 1;
+while(start + 1 < end)
+{
+    mid = start + (e - s)/2;
+    if (nums[mid] < target)
+        start = mid;
+    else
+        end = mid;
+}
+
+// (start, end)
+
+/*
+ *  Template:2
+ * 
+ * 
+*/
+
+start = 0; end = len;
+while(start < end)
+{
+    mid = start + (e - s) / 2;
+    if (num[mid] < target)
+        start = mid + 1;
+    else
+        end = mid;
+}
+// start == end
+
+/*
+ *  Template:3
+ * 
+ * 
+*/
+start = 0; end = len - 1;
+while (start <= end)
+{
+    mid = start + (e - s) / 2;
+    if (nums[mid] < target)
+        start = mid + 1;
+    else
+        end = mid - 1;
+}
+
+// (end, start)
