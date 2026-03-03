@@ -11,6 +11,12 @@ public:
         return binary(nums, k, maxElement, maxSum);
     }
 
+/*
+ *  要找的是最小和, 即最小边界, 类似于找最小左边界或最大右边界的值, 
+ *  这种情况返回满足条件的low或者high即可, 只有要在一堆数中找到确切的数时, 才返回mid 
+ *  或用ans记录mid
+ * 
+*/
 private:
     int binary(vector<int>& nums, int count, int low, int high)
     {
@@ -21,7 +27,7 @@ private:
             if (!valid(nums, count, mid))   low = mid + 1;
             else high = mid - 1;
         }
-        return low;
+        return low; 
     }
 
     int valid(vector<int>& nums, int count, int subSum)
