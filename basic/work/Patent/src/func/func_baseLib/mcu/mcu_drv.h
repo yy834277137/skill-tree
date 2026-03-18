@@ -1,0 +1,304 @@
+
+/*******************************************************************************
+ * mcu_drv.h
+ *
+ * HangZhou Hikvision Digital Technology Co., Ltd. All Right Reserved.
+ *
+ * Author : cuifeng5
+ * Version: V1.0.0  2021年06月07日 Create
+ *
+ * Description : mcu通信相关
+ * Modification: 
+ *******************************************************************************/
+
+#ifndef __MCU_DRV_H_
+#define __MCU_DRV_H_
+#include "../../captchip/inc/edid.h"
+
+typedef enum
+{
+    MCU_MODE_LOOP,          /* 环通 */
+    MCU_MODE_NORMAL,        /* 主控模式 */
+
+    MCU_MODE_BUTT,
+} MCU_MODE_E;
+
+/*******************************************************************************
+* 函数名  : mcu_func_getBuildTime
+* 描  述  : 获取MCU编译时间
+* 输  入  : UINT32 u32Chn
+            UINT8 *pu8Buff
+            UINT32 u32Len
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_getBuildTime(UINT32 u32Chn, UINT8 *pu8Buff, UINT32 u32Len);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mcuReset
+* 描  述  : mcu复位
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mcuReset(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_heartBeatStart
+* 描  述  : 开始发送心跳信号
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_heartBeatStart(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_heartBeatStop
+* 描  述  : 停止发送心跳信号
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_heartBeatStop(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_firmwareUpdate
+* 描  述  : 固件升级
+* 输  入  : UINT32 u32Chn
+            const UINT8 *pu8Buff
+            UINT32 u32Len
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_firmwareUpdate(UINT32 u32Chn, const UINT8 *pu8Buff, UINT32 u32Len);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mcuSetMode
+* 描  述  : 设置环通模式
+* 输  入  : UINT32 u32Chn
+            MCU_MODE_E enMode
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mcuSetMode(UINT32 u32Chn, MCU_MODE_E enMode);
+
+/*******************************************************************************
+* 函数名  : mcu_func_fpgaInit
+* 描  述  : fpga初始化
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_fpgaInit(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_fpgaReset
+* 描  述  : fpga复位
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_fpgaReset(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_fpgaSetInputResolution
+* 描  述  : fpga设置输入分辨率
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_fpgaSetInputResolution(UINT32 u32Chn, UINT32 u32Width, UINT32 u32Height, UINT32 u32Fps);
+
+/*******************************************************************************
+* 函数名  : mcu_func_fpgaSetOutputResolution
+* 描  述  : fpga设置输出分辨率
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_fpgaSetOutputResolution(UINT32 u32Chn, UINT32 u32Width, UINT32 u32Height, UINT32 u32Fps);
+
+/*******************************************************************************
+* 函数名  : mcu_func_fpgaGetBuildTime
+* 描  述  : 获取FPGA编译时间
+* 输  入  : UINT32 u32Chn
+            UINT8 *pu8Buff
+            UINT32 u32Len
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_fpgaGetBuildTime(UINT32 u32Chn, UINT8 *pu8Buff, UINT32 u32Len);
+
+/*******************************************************************************
+* 函数名  : mcu_func_ch7053Init
+* 描  述  : CH7053初始化
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_ch7053Init(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_ch7053Reset
+* 描  述  : ch7053复位
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_ch7053Reset(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_ch7053SetInputResolution
+* 描  述  : Ch7053设置输入分辨率
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_ch7053SetInputResolution(UINT32 u32Chn, UINT32 u32Width, UINT32 u32Height, UINT32 u32Fps);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mointorGetEdid
+* 描  述  : 获取EDID
+* 输  入  : UINT32 u32Chn
+            VIDEO_EDID_BUFF_S *pstEdid
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mointorGetEdid(UINT32 u32Chn, VIDEO_EDID_BUFF_S *pstEdid);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mstarInit
+* 描  述  : 初始化
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mstarInit(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mstarReset
+* 描  述  : 复位
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mstarReset(UINT32 u32Chn);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mstarHotplug
+* 描  述  : 热插拔
+* 输  入  : UINT32 u32Chn
+            VIDEO_CABLE_E enCable
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mstarHotplug(UINT32 u32Chn, CAPT_CABLE_E enCable);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mstarGetRes
+* 描  述  : 获取mstar的分辨率
+* 输  入  : UINT32 u32Chn
+            VIDEO_IO_STATUS_S *pstStatus
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mstarGetRes(UINT32 u32Chn, CAPT_STATUS_S *pstStatus);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mstarSetCsc
+* 描  述  : 配置CSC参数
+* 输  入  : UINT32 u32Chn
+            VIDEO_CSC_S *pstCsc
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mstarSetCsc(UINT32 u32Chn, VIDEO_CSC_S *pstCsc);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mstarAutoAdjust
+* 描  述  : 自动调整
+* 输  入  : UINT32 u32Chn
+            VIDEO_CABLE_E enCable
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mstarAutoAdjust(UINT32 u32Chn, CAPT_CABLE_E enCable);
+
+/*******************************************************************************
+* 函数名  : mcu_drvMstarGetBuildTime
+* 描  述  : 获取mstar编译时间
+* 输  入  : UINT32 u32Chn
+            UINT8 *pu8Buff
+            UINT32 u32Len
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_drvMstarGetBuildTime(UINT32 u32Chn, UINT8 *pu8Buff, UINT32 u32Len);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mucGetEdid
+* 描  述  : 获取EDID
+* 输  入  : UINT32 u32Chn
+            VIDEO_EDID_BUFF_S *pstEdid
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+UINT32 mcu_func_mucGetEdid(UINT32 u32Chn, UINT8 *pu8Buff, UINT32 u32BuffLen, CAPT_CABLE_E enCable);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mcuSetEdid
+* 描  述  : 设置EDID
+* 输  入  : UINT32 u32Chn
+            VIDEO_EDID_BUFF_S *pstEdid
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*           SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mcuSetEdid(UINT32 u32Chn, VIDEO_EDID_BUFF_S *pstEdidBuff, CAPT_CABLE_E enCable);
+
+/*******************************************************************************
+* 函数名  : mcu_func_mstarScale
+* 描  述  : mstar输入分辨率大于面板分辨率时，会对输入分辨率进行缩放，计算缩放后的分辨率
+* 输  入  : CAPT_RESOLUTION_S *pstSrc
+* 输  出  : CAPT_RESOLUTION_S *pstDst
+* 返回值  : SAL_SOK : 成功
+*         SAL_FAIL : 失败
+*******************************************************************************/
+INT32 mcu_func_mstarScale(CAPT_RESOLUTION_S *pstDst, CAPT_RESOLUTION_S *pstSrc);
+
+/*******************************************************************************
+* 函数名  : mcu_drvMstarCheckEdid
+* 描  述  : mstar升级的时候可能会把edid清掉，所以，初始化检查EDID
+* 输  入  : UINT32 u32Chn
+* 输  出  : 
+* 返回值  : SAL_SOK : 成功
+*         SAL_FAIL : 失败
+*******************************************************************************/
+UINT32 mcu_func_mstarCheckEdid(UINT32 u32Chn, VIDEO_CABLE_E enCable, VIDEO_EDID_BUFF_S *pstEdidBuff);
+
+
+#endif
+

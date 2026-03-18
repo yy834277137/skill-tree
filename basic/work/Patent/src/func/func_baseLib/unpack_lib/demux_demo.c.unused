@@ -1,0 +1,321 @@
+
+
+
+static void *thread_downloadfilestream(void *chan)
+{
+    int n = 0, readcount = 0, w = 0, r = 0;
+    DEC_SHARE_BUF *decBuf;
+    UINT decChan = *(PUINT)chan;
+    int  part1 = 0, emptyLen = 0, nSize = 0;
+    unsigned char *pdst = NULL, *decTmpBuf = NULL;
+    FILE *fileDec;
+    char fname[20];
+    int readbufcount = 0;
+    SAL_INFO("download chan %u\n",decChan);
+
+    sprintf(fname, "testdec.mp4");
+    
+    fileDec = fopen(fname, "rb");
+    if (fileDec <= 0)
+    {
+        printf("************Func %s, open file err %d.mp4**************\n", __FUNCTION__, decChan + 1);
+        return;
+    }
+
+    decTmpBuf = (unsigned char *)malloc(300 * 1024);
+    if (decTmpBuf == NULL)
+    {
+        printf("************Func %s, malloc buf err %p, decChan %d**************\n",
+               __FUNCTION__, decTmpBuf, decChan);
+        return;
+    }
+
+    decBuf = pstDSPINITPARA->decShareBuf + decChan;
+    emptyLen = decBuf->bufLen;
+    
+    printf("------ decdownload buflen %d ------\n",decBuf->bufLen);
+    while(1)
+    {
+        if(!decrun)
+        {
+            usleep(100*1000);
+            continue;
+        }
+        decrun = 0;
+        fseek(fileDec,0,SEEK_SET);
+        while (1)
+        {
+            n = fread(decTmpBuf, 1, 250 * 1024, fileDec);
+            if (n == 0)
+            {
+                readcount++;
+                printf("decode the file %d times\n", readcount,fname);
+                fseek(fileDec, 0, 0);
+                break;
+            }
+
+            nSize = n;
+            while (emptyLen < nSize)
+            {
+                w = decBuf->writeIdx;
+                r = decBuf->readIdx;
+
+                emptyLen = ((r + decBuf->bufLen) - w - 1) % decBuf->bufLen + 1;
+                part1 = decBuf->bufLen - w;
+                //printf("emptyLen %d nSize %d r %d w %d\n",emptyLen,nSize,r,w);
+                usleep(2 * 1000);
+            }
+            if (part1 >= nSize)
+            {
+                pdst = decBuf->pVirtAddr + w;
+                memcpy(pdst, decTmpBuf, nSize);
+            }
+            else
+            {
+                pdst = decBuf->pVirtAddr + w;
+                memcpy(pdst, decTmpBuf, part1);
+                pdst = decBuf->pVirtAddr;
+                memcpy(pdst, decTmpBuf + part1, nSize - part1);
+            }
+            decBuf->writeIdx = (w + nSize) % decBuf->bufLen;
+            emptyLen = 0;
+            printf("writeIdx %d\n",decBuf->writeIdx);
+            usleep(3 * 1000);
+        }
+    }
+    return;
+}
+
+
+
+int MultimediaService::demuxInit()
+{
+    int             ret      = -1,demIdx;
+    unsigned int   memSz     = 0;
+    unsigned char* demMem    = 0;
+    DEC_SHARE_BUF *pDecShare = NULL;
+    DEM_TYPE       type      = /*DEM_PS;*/DEM_RTP;
+    DEM_PARAM      demPrm;
+    DEM_PARAM*     pDemPrm   = &demPrm;
+    DEM_ORGBUF_PRM orgBufPrm;
+
+    ret = DemuxControl(DEM_GET_HANDLE,&type,pDemPrm);
+    if(SAL_SOK != ret)
+    {
+        SAL_ERROR("get  demux handle err ret %x demhdl %d\n",ret,pDemPrm->demHdl);
+        return ret;
+    }
+
+    pDemPrm->bufAddr = (unsigned char*)SAL_memAlloc(pDemPrm->bufLen);
+    if(NULL == pDemPrm->bufAddr)
+    {
+        SAL_ERROR("demMem %p memSz %d\n",pDemPrm->bufAddr,pDemPrm->bufLen);
+        return ret;
+    }
+    
+    memset(pDemPrm->bufAddr,0,pDemPrm->bufLen);
+    ret = DemuxControl(DEM_CREATE,pDemPrm,NULL);
+    if(SAL_SOK != ret)
+    {
+        SAL_ERROR("create demux handle err ret %x\n",ret);
+        SAL_addrFree((void **)&pDemPrm->bufAddr, pDemPrm->bufLen);
+        return ret;
+    }   
+
+    pDecShare = g_pDspInitPara->decShareBuf;
+    orgBufPrm.orgBuf    = pDecShare->pPhysAddr;
+    orgBufPrm.orgbuflen = pDecShare->bufLen;
+    demIdx = pDemPrm->demHdl;
+    ret = DemuxControl(DEM_SET_ORGBUF,&demIdx,&orgBufPrm);
+    if(SAL_SOK != ret)
+    {
+        SAL_ERROR("DEM_SET_ORGBUF ret %x\n",ret);
+        SAL_addrFree((void **)&pDemPrm->bufAddr, pDemPrm->bufLen);
+        return ret;
+    } 
+
+    demuxHandle = demIdx;
+    demStampCtrl.demuxStart = 0;
+    /* 创建数据处理线程 */
+    demuxProcTskRun = true;
+    pthread_create(&demuxProcTskId, NULL, dataProcTsk, this);
+    return ret;
+}
+
+void* MultimediaService::dataProcTsk(void *data)
+{
+    int ret = 0, newFd;
+    MultimediaService *pMultimedia = (MultimediaService *) data;
+
+    SAL_INFOALL("demux%d enter data proc tsk, thread=%d +++++++++++++++++++++++++ \n", pMultimedia->rtpDemChn, syscall(SYS_gettid));
+    pMultimedia->demuxProcTskRun = 1;
+    while(pMultimedia->demuxProcTskRun)
+    {
+        pMultimedia->dataProc();
+    }
+
+	SAL_INFOALL("demux%d exit data proc tsk, thread=%d +++++++++++++++++++++++++ \n", pMultimedia->rtpDemChn, syscall(SYS_gettid));
+    return NULL;
+}
+
+
+/*****************************************************************************
+							VdecDev
+*****************************************************************************/
+bool MultimediaService::dataProc()
+{
+    int                ret    = 0;
+    DEC_SHARE_BUF *pDecShare  = g_pDspInitPara->decShareBuf;
+    UINT            variable  = 0;
+    UINT             sleepUs  = 0;
+    unsigned int  timestampMs = 0;
+    DEM_CALC_PRM     calcPrm;
+    DEM_PRCO_OUT     procOut;
+    
+    sleepUs  = 4 * 1000;
+    if(!demStampCtrl.demuxStart)
+    {
+        usleep(sleepUs);
+        return true;
+    }
+    
+    calcPrm.demHdl  = demuxHandle;
+    calcPrm.orgWIdx = pDecShare->writeIdx;
+    ret = DemuxControl(DEM_CALC_DATA,&calcPrm,&variable);
+    if(variable <= 255)
+    {
+        usleep(sleepUs);
+        return true;
+    }
+
+    ret = DemuxControl(DEM_PROC_DATA,&demuxHandle,&procOut);
+    pDecShare->readIdx = procOut.orgRIdx;
+    if(!procOut.newFrm)
+    {
+        usleep(2*1000);
+        return true;
+    }
+
+    #if 1
+    /*如果回放按时标来，只控制视频不控制音频，让视频画面先出来*/
+    if((STREAM_FRAME_TYPE_VIDEO == procOut.frmType) && demStampCtrl.stampPlay)
+    {
+        if(0 == demStampCtrl.vBaseTime)
+        {
+            TIME_MS(demStampCtrl.vBaseTime);
+            demStampCtrl.curTime    = demStampCtrl.vBaseTime;
+            demStampCtrl.vStartTime = procOut.timestamp;
+            DemuxControl(DEM_CLEAR_FRM,&demuxHandle,NULL);
+        }
+        else
+        {
+            TIME_MS(demStampCtrl.curTime);
+            timestampMs = procOut.timestamp;
+            while(timestampMs - demStampCtrl.vStartTime > demStampCtrl.curTime - demStampCtrl.vBaseTime)
+            {
+                usleep(2*1000);
+                TIME_MS(demStampCtrl.curTime);
+            }
+            DemuxControl(DEM_CLEAR_FRM,&demuxHandle,NULL);
+        }
+    }
+    #endif
+    return true;
+}
+
+bool VdecItf::OutPutPlaneProc()
+{
+    struct v4l2_buffer v4l2_buf;
+    struct v4l2_plane planes[MAX_PLANES];
+    NvBuffer *buffer;
+    int      ret;
+    static int    decCnt = 0;
+    unsigned char* pData = NULL;
+    
+    memset(&v4l2_buf, 0, sizeof(v4l2_buf));
+    memset(planes, 0, sizeof(planes));
+    v4l2_buf.m.planes = planes;
+
+    if(outputPlaneCount >= outputPlaneBufNum)
+    {
+        ret = mpDec->output_plane.dqBuffer(v4l2_buf, &buffer, NULL, -1);
+    }
+    else
+    {
+        buffer = mpDec->output_plane.getNthBuffer(outputPlaneCount);
+        v4l2_buf.index = outputPlaneCount;
+        outputPlaneCount++;
+    }
+
+    DEM_BUFFER demBuf;
+    demBuf.bufType = STREAM_FRAME_TYPE_VIDEO;
+    demBuf.addr    = buffer->planes[0].data;
+    demBuf.length  = 2*1024*1024;
+    demBuf.datalen = 0;
+    int    demHdl  = 0;
+    do
+    {
+        ret = DemuxControl(DEM_FULL_BUF,&demHdl,&demBuf);
+        if(ret)
+        {
+            usleep(2*1000);
+        }
+    }while(0!=ret);
+    decCnt++;
+    //SAL_INFO("decCnt %d timestamp %u\n",decCnt,demBuf.timestamp);
+    v4l2_buf.m.planes[0].bytesused = demBuf.datalen;
+    buffer->planes[0].bytesused = demBuf.datalen;
+    ret = mpDec->output_plane.qBuffer(v4l2_buf, NULL);
+}
+
+
+bool AudioItf::audioDecProc()
+{
+    unsigned char audBuf[360];
+    unsigned char audPcmBuf[660];
+    unsigned char stereoPcmBuf[1280];
+    int           ret  = 0;
+    int           demuxHdl = 0;
+    DEM_BUFFER    demBuf;
+    unsigned long runTimestamp;
+    
+    bTskDec = true;
+    while(bTskDec)
+    {
+        if(!(flgAo & MUL_AUD_PLAY))
+        {
+            usleep(10*1000);
+            continue;
+        }
+        
+        demBuf.bufType = STREAM_FRAME_TYPE_AUDIO;
+        demBuf.addr    = audBuf;
+        demBuf.length  = 360;
+        demBuf.datalen = 0;
+
+        ret = DemuxControl(DEM_FULL_BUF, &demuxHdl, &demBuf);
+        if(DEMUX_S_OK != ret)
+        {
+           usleep(2*1000);
+           continue;
+        }
+        
+        /*
+        if(demBuf.datalen <= 320)
+        {
+            G711DEC_Decode(0, demBuf.datalen, audPcmBuf,demBuf.addr);
+            oneChannelToTwoChannel(audPcmBuf,640,stereoPcmBuf);
+            ret = AudPcmOut(stereoPcmBuf,1280,MUL_AUD_PLAY);
+        }
+        if(ret)
+        {
+            TIME_MS(runTimestamp);
+            SAL_ERROR("audpcmout multi_aud err! %x datalen %d runTimestamp %llu\n",ret,demBuf.datalen,runTimestamp);
+        }
+        */
+    }   
+    
+    return SAL_SOK;
+}
+
+
