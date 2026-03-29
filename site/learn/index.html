@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="学习计划、Todo 与复盘" />
+  <meta name="description" content="学习 — 已掌握、待巩固、Todo 与复盘" />
   <title>学习 · 大宝杨的技能树</title>
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap wide">
     <nav class="site-nav" aria-label="面包屑">
       <a href="../index.html">首页</a>
       <span class="sep">/</span>
@@ -18,32 +18,40 @@
     <header class="page-header">
       <span class="badge">Learn</span>
       <h1>学习</h1>
-      <p class="subtitle">待学习主题 · 今日 Todo · 昨日记录</p>
+      <p class="subtitle">已掌握知识 · 待拓展与巩固 · 昨日记录 · 今日 Todo</p>
       <nav class="toc" aria-label="本页目录">
-        <a href="#learning">待学习</a>
-        <a href="#todo">今日 Todo</a>
+        <a href="#mastered">已掌握</a>
+        <a href="#extend">待拓展巩固</a>
         <a href="#yesterday">昨日记录</a>
+        <a href="#todo">今日 Todo</a>
       </nav>
     </header>
 
-    <section class="module" id="learning">
-      <h2>当前要学习</h2>
+    <section class="module" id="mastered">
+      <h2>目前已掌握的技能与知识</h2>
       <div class="card">
-        <ul class="skills learn">
-          <li>算法与数据结构：二分、双指针、BFS/DFS 等专题巩固（见仓库 AlgorithmBasic）</li>
-          <li>学习路径与清单：对齐 <code class="inline">basic/work/LearningPath/skills_checklist.md</code> 中的下一批条目</li>
-          <li>（在此继续追加你的近期主题）</li>
+        <p>与简历「技能」一致，可在仓库 <code class="inline">basic/work/Resume/resume.tex</code> 修改后同步更新下列条目。</p>
+        <ul class="skills mt-1">
+          <li><strong>嵌入式 Linux</strong>：ARM（RK / HiSilicon）、X86 平台开发与适配；交叉编译、部署与系统联调</li>
+          <li><strong>多媒体/图像链路</strong>：显示与图像处理业务流程；音视频编解码相关模块对接与验证</li>
+          <li><strong>性能优化</strong>：Profiling（perf/valgrind）、Cache/访存分析、并行化（OpenMP）、SIMD（RK NEON / X86 AVX2）</li>
+          <li><strong>工程化与质量</strong>：冒烟/自动化回归测试框架建设；GDB 定位与问题修复。</li>
+          <li><strong>工具/语言</strong>：C/C++（主力）、Python/Shell；GCC/Clang、CMake/Make、GDB。</li>
         </ul>
+        <div class="skills-extra">
+          <h3>技能树（Mermaid）</h3>
+          <p><a class="link-accent" href="https://github.com/yy834277137/skill-tree/blob/master/basic/work/Resume/resume_skill_tree.md" rel="noopener noreferrer">在 GitHub 打开 resume_skill_tree.md</a></p>
+        </div>
       </div>
     </section>
 
-    <section class="module" id="todo">
-      <h2>今日 Todo</h2>
+    <section class="module" id="extend">
+      <h2>还需要拓展和巩固的技能与知识</h2>
       <div class="card">
-        <ul class="todo">
-          <li><input type="checkbox" /> 复习昨日笔记 / 错题</li>
-          <li><input type="checkbox" /> 推进 checklist 中下一小节</li>
-          <li><input type="checkbox" /> 提交或整理当日学习记录</li>
+        <ul class="skills learn">
+          <li>算法与数据结构：二分、双指针、BFS/DFS 等专题巩固（仓库 <code class="inline">basic/work/AlgorithmBasic</code>）</li>
+          <li>系统学习路径：对齐 <code class="inline">basic/work/LearningPath/skills_checklist.md</code> 中下一批条目</li>
+          <li>（在此追加：薄弱语言特性、源码阅读、八股/面经等）</li>
         </ul>
       </div>
     </section>
@@ -58,8 +66,20 @@
       </div>
     </section>
 
+    <section class="module" id="todo">
+      <h2>今日 Todo</h2>
+      <div class="card">
+        <ul class="todo">
+          <li><input type="checkbox" /> 复习昨日笔记 / 错题</li>
+          <li><input type="checkbox" /> 推进 checklist 或算法专题一小节</li>
+          <li><input type="checkbox" /> 更新本页「昨日记录」备注明日回看</li>
+        </ul>
+      </div>
+    </section>
+
     <div class="actions">
-      <a class="btn btn-ghost" href="../index.html">← 返回首页</a>
+      <a class="btn btn-ghost" href="../work/index.html">← 工作</a>
+      <a class="btn btn-ghost" href="../index.html">首页</a>
       <a class="btn btn-primary" href="https://github.com/yy834277137/skill-tree" rel="noopener noreferrer">GitHub 仓库</a>
     </div>
 

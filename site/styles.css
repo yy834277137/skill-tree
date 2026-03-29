@@ -101,6 +101,7 @@ nav.toc a:hover {
 }
 @media (min-width: 640px) {
   .overview-grid { grid-template-columns: repeat(3, 1fr); }
+  .overview-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
 }
 
 a.card-block {
