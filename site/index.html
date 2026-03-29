@@ -3,86 +3,181 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="SkillTree — 个人技能树与学习路径的结构化记录" />
-  <title>SkillTree · 个人技能树</title>
+  <meta name="description" content="SkillTree — 简历、技能与学习看板" />
+  <title>SkillTree · 个人看板</title>
   <style>
     :root {
       --bg: #0f1419;
       --surface: #1a222c;
+      --surface-hover: #232d3a;
       --text: #e7ecf1;
       --muted: #8b9aab;
       --accent: #5eb3f6;
       --accent-dim: #3d8fd4;
+      --ok: #6bcf7f;
+      --warn: #e6b35c;
       --radius: 14px;
+      --max: 42rem;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; }
+    html { font-size: 16px; scroll-behavior: smooth; }
     body {
       min-height: 100vh;
       font-family: system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.65;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1.25rem;
+      line-height: 1.6;
+      padding: 1.75rem 1.25rem 3rem;
       background-image:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(94, 179, 246, 0.18), transparent),
-        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(94, 179, 246, 0.06), transparent);
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(94, 179, 246, 0.14), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(94, 179, 246, 0.05), transparent);
     }
-    main {
-      max-width: 32rem;
-      width: 100%;
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    header {
       text-align: center;
+      margin-bottom: 2rem;
     }
     .badge {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
     }
-    h1 {
-      font-size: clamp(1.75rem, 5vw, 2.25rem);
+    header h1 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
       font-weight: 600;
       letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
-    p.lead {
+    .lead {
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 0.98rem;
+      max-width: 36rem;
+      margin: 0 auto;
+    }
+    nav.toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      justify-content: center;
+      margin: 1.35rem 0 0;
+    }
+    nav.toc a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.35rem 0.65rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    nav.toc a:hover {
+      color: var(--text);
+      border-color: var(--accent-dim);
+      background: rgba(94, 179, 246, 0.08);
+    }
+    section.module {
       margin-bottom: 1.75rem;
+    }
+    section.module h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      padding-left: 0.65rem;
+      border-left: 3px solid var(--accent);
+      letter-spacing: -0.01em;
     }
     .card {
       background: var(--surface);
       border-radius: var(--radius);
-      padding: 1.5rem 1.35rem;
-      margin-bottom: 1.75rem;
-      text-align: left;
+      padding: 1.25rem 1.35rem;
       border: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .card p {
+    .card p, .card li {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
+    }
+    .card p + p { margin-top: 0.65rem; }
+    .resume-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .resume-meta span {
+      color: var(--muted);
+    }
+    ul.skills {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul.skills li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    ul.skills li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--ok);
+      opacity: 0.85;
+    }
+    ul.learn li::before {
+      background: var(--warn);
+    }
+    ul.todo {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul.todo li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.55rem;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    ul.todo input[type="checkbox"] {
+      margin-top: 0.28rem;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+    .log {
+      white-space: pre-wrap;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
     }
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 0.65rem;
       justify-content: center;
+      margin-top: 2rem;
     }
     a.btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.65rem 1.35rem;
+      padding: 0.55rem 1.2rem;
       border-radius: 10px;
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       text-decoration: none;
       transition: transform 0.15s ease, background 0.15s ease;
     }
@@ -92,31 +187,94 @@
       color: var(--bg);
     }
     a.btn-primary:hover { background: var(--accent-dim); }
-    a.btn-ghost {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-    a.btn-ghost:hover { border-color: var(--muted); background: rgba(255, 255, 255, 0.04); }
     footer {
-      margin-top: 2.5rem;
-      font-size: 0.8rem;
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.78rem;
       color: var(--muted);
     }
   </style>
 </head>
 <body>
-  <main>
-    <span class="badge">SkillTree</span>
-    <h1>个人技能树</h1>
-    <p class="lead">用结构化笔记记录计算机基础、算法与语言学习路径，持续迭代自己的技术图谱。</p>
-    <div class="card">
-      <p>本仓库为本地知识库：学习路径、题解摘要、技能清单等以 Markdown 与 Mermaid 维护，便于版本管理与回顾。</p>
-    </div>
+  <div class="wrap">
+    <header>
+      <span class="badge">SkillTree</span>
+      <h1>个人学习与职业看板</h1>
+      <p class="lead">简历摘要、技能边界与每日节奏；静态页内容请在 <code style="font-size:0.85em; color:var(--accent);">site/index.html</code> 中按需更新。</p>
+      <nav class="toc" aria-label="页面模块">
+        <a href="#resume">简历</a>
+        <a href="#mastered">已掌握</a>
+        <a href="#learning">待学习</a>
+        <a href="#todo">今日 Todo</a>
+        <a href="#yesterday">昨日记录</a>
+      </nav>
+    </header>
+
+    <section class="module" id="resume">
+      <h2>简历与方向</h2>
+      <div class="card">
+        <div class="resume-meta">
+          <span>侧重</span> 嵌入式 Linux · 多媒体/图像链路 · 性能与工程化
+        </div>
+        <p>熟悉 ARM/X86 平台开发与交叉编译联调；显示与图像处理、音视频链路有实践经验。擅长用 perf、Valgrind 等做 Profiling，关注 Cache/访存与并行化（OpenMP）、SIMD（NEON/AVX2）。日常技术栈以 C/C++ 为主，Python/Shell 辅助，构建工具链常用 GCC/Clang、CMake。</p>
+        <p style="margin-top:1rem;">
+          <a href="https://github.com/yy834277137/skill-tree" rel="noopener noreferrer" style="color:var(--accent);">GitHub 知识库</a>
+          <span style="color:var(--muted);"> · </span>
+          <span>详细图谱见仓库内 <code style="font-size:0.85em;">basic/work/Resume/resume_skill_tree.md</code></span>
+        </p>
+      </div>
+    </section>
+
+    <section class="module" id="mastered">
+      <h2>当前已掌握（概要）</h2>
+      <div class="card">
+        <ul class="skills">
+          <li>嵌入式 Linux：ARM/X86、交叉编译与系统联调</li>
+          <li>多媒体：显示与图像处理、音视频编解码基础</li>
+          <li>性能：perf/Valgrind、Cache/访存分析、OpenMP、NEON/AVX2</li>
+          <li>工程化：自动化测试框架、GDB 调试</li>
+          <li>语言与工具：C/C++、Python/Shell、GCC/Clang、CMake</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="module" id="learning">
+      <h2>当前要学习</h2>
+      <div class="card">
+        <ul class="skills learn">
+          <li>算法与数据结构：二分、双指针、BFS/DFS 等专题巩固（见仓库 AlgorithmBasic）</li>
+          <li>学习路径与清单：对齐 <code style="font-size:0.85em;">skills_checklist.md</code> 中的下一批条目</li>
+          <li>（在此继续追加你的近期主题）</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="module" id="todo">
+      <h2>今日 Todo</h2>
+      <div class="card">
+        <ul class="todo">
+          <li><input type="checkbox" /> 复习昨日笔记 / 错题</li>
+          <li><input type="checkbox" /> 推进 checklist 中下一小节</li>
+          <li><input type="checkbox" /> 提交或整理当日学习记录</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="module" id="yesterday">
+      <h2>昨日学习记录</h2>
+      <div class="card">
+        <div class="log">2026-03-28
+· 已学主题：（在此写要点，多行即可）
+· 产出：PR / 笔记路径 / 题单进度
+· 复盘：一处可改进点</div>
+      </div>
+    </section>
+
     <div class="actions">
-      <a class="btn btn-primary" href="https://github.com/yy834277137/skill-tree" rel="noopener noreferrer">在 GitHub 打开仓库</a>
+      <a class="btn btn-primary" href="https://github.com/yy834277137/skill-tree" rel="noopener noreferrer">打开 GitHub 仓库</a>
     </div>
+
     <footer>doubleyang.club</footer>
-  </main>
+  </div>
 </body>
 </html>
