@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="生活随笔与备忘" />
+  <meta name="description" content="生活 — 阅读书单与备忘" />
   <title>生活 · 大宝杨的技能树</title>
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap wide">
     <nav class="site-nav" aria-label="面包屑">
       <a href="../index.html">首页</a>
       <span class="sep">/</span>
@@ -18,14 +18,28 @@
     <header class="page-header">
       <span class="badge">Life</span>
       <h1>生活</h1>
-      <p class="subtitle">简要记录 · 可按需改为书单、运动或日记模块</p>
+      <p class="subtitle">书单以仓库 <code class="inline">basic/life/book</code> 为源；以下为简要介绍</p>
     </header>
 
-    <section class="module">
-      <h2>近况</h2>
+    <section class="module" id="books">
+      <h2>当前书单（阅读笔记）</h2>
       <div class="card">
-        <p>在此书写生活向备忘：阅读进度、习惯打卡、旅行或随笔等。首页仅保留一句概述，细节集中在本页维护。</p>
-        <p class="mt-1">（示例）本周：________；在读：________。</p>
+        <p>生活向阅读材料集中在 <strong>《毛泽东选集》</strong>：按卷与历史时期分目录整理，正文与提要写在 Markdown 里，重要篇章会用 <strong>Mermaid</strong> 做结构梳理（方针—办法—前途、对比论证等），便于复习与对照原文。</p>
+        <p class="mt-1">仓库中已展开的一条线是 <strong>《毛选》第二卷 · 抗日战争时期（上）</strong>；当前精读示例篇目为 <strong>《反对日本进攻的方针、办法和前途》</strong>，笔记路径：</p>
+        <p class="mt-1"><code class="inline">basic/life/book/毛选/毛选二/抗日战争时期上.md</code></p>
+        <p class="mt-1">后续篇目可在同目录树下继续追加；与站点静态页不同步时，以仓库文件为准。</p>
+        <p class="mt-1"><a class="link-accent" href="https://github.com/yy834277137/skill-tree/tree/master/basic/life/book" rel="noopener noreferrer">在 GitHub 打开 book 目录</a>
+          ·
+          <a class="link-accent" href="https://github.com/yy834277137/skill-tree/blob/master/basic/life/book/%E6%AF%9B%E9%80%89/%E6%AF%9B%E9%80%89%E4%BA%8C/%E6%8A%97%E6%97%A5%E6%88%98%E4%BA%89%E6%97%B6%E6%9C%9F%E4%B8%8A.md" rel="noopener noreferrer">打开当前篇目笔记</a>
+        </p>
+      </div>
+    </section>
+
+    <section class="module">
+      <h2>其他备忘</h2>
+      <div class="card">
+        <p>运动、习惯与随笔等仍可记在此处或另开 Markdown；首页「生活」卡片仅保留书单相关概述。</p>
+        <p class="mt-1">（示例）本周：________；在读进度：________。</p>
       </div>
     </section>
 
