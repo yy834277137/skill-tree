@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="SkillTree — 个人技能树与学习路径的结构化记录" />
+  <title>SkillTree · 个人技能树</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --surface: #1a222c;
+      --text: #e7ecf1;
+      --muted: #8b9aab;
+      --accent: #5eb3f6;
+      --accent-dim: #3d8fd4;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      min-height: 100vh;
+      font-family: system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(94, 179, 246, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(94, 179, 246, 0.06), transparent);
+    }
+    main {
+      max-width: 32rem;
+      width: 100%;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    p.lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.75rem;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.35rem;
+      margin-bottom: 1.75rem;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    a.btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.35rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    a.btn:hover { transform: translateY(-1px); }
+    a.btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    a.btn-primary:hover { background: var(--accent-dim); }
+    a.btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    a.btn-ghost:hover { border-color: var(--muted); background: rgba(255, 255, 255, 0.04); }
+    footer {
+      margin-top: 2.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="badge">SkillTree</span>
+    <h1>个人技能树</h1>
+    <p class="lead">用结构化笔记记录计算机基础、算法与语言学习路径，持续迭代自己的技术图谱。</p>
+    <div class="card">
+      <p>本仓库为本地知识库：学习路径、题解摘要、技能清单等以 Markdown 与 Mermaid 维护，便于版本管理与回顾。</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://gitee.com/yy834277137/skill-tree" rel="noopener noreferrer">在 Gitee 打开仓库</a>
+    </div>
+    <footer>doubleyang.club</footer>
+  </main>
+</body>
+</html>
