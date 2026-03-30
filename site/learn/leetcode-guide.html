@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LeetCode 刷题指南：链表、堆与第 k 小等题单，含题目描述与官方风格示例" />
+  <title>LeetCode 刷题指南 · 学习 · 大宝杨的技能树</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="wrap wide">
+    <nav class="site-nav" aria-label="面包屑">
+      <a href="../index.html">首页</a>
+      <span class="sep">/</span>
+      <a href="index.html">学习</a>
+      <span class="sep">/</span>
+      <a href="index.html#leetcode-guide">学习指南</a>
+      <span class="sep">/</span>
+      <span>LeetCode 刷题</span>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">LeetCode</span>
+      <h1>LeetCode 刷题指南</h1>
+      <p class="subtitle">今日题单 · 分类总览 · 题目描述与官方示例用例（与题面一致，可在官网对照）</p>
+      <nav class="toc" aria-label="本页题号">
+        <a href="#taxonomy">分类</a>
+        <a href="#lc-21">21</a>
+        <a href="#lc-86">86</a>
+        <a href="#lc-23">23</a>
+        <a href="#lc-141">141</a>
+        <a href="#lc-142">142</a>
+        <a href="#lc-876">876</a>
+        <a href="#lc-19">19</a>
+        <a href="#lc-160">160</a>
+        <a href="#lc-264">264</a>
+        <a href="#lc-378">378</a>
+        <a href="#lc-373">373</a>
+        <a href="#lc-82">82</a>
+        <a href="#lc-2">2</a>
+        <a href="#lc-445">445</a>
+      </nav>
+    </header>
+
+    <div class="card">
+      <article class="guide-doc" id="guide-body">
+        <blockquote>
+          <p><strong>类别：</strong>学习指南 · 算法刷题（与「面试指南」区分）。</p>
+          <p>下列<strong>题目描述、示例与约束</strong>与 LeetCode 中文/英文题面一致；实现时以官网当前版本为准。链表题默认 <code class="inline">ListNode</code> 结构定义见各题页。</p>
+        </blockquote>
+
+        <h2 id="taxonomy">题目分类总览</h2>
+        <p>今日 14 题可粗分为三类，便于串联思路（一题可跨类）：</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>分类</th><th>题号</th><th>要点</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>链表：合并 / 拆分 / 去重 / 删除</strong></td>
+                <td>21, 86, 23, 82, 19, 876</td>
+                <td>哑结点、快慢指针、多路归并（23 常用优先队列）</td>
+              </tr>
+              <tr>
+                <td><strong>链表：环与相交</strong></td>
+                <td>141, 142, 160</td>
+                <td>快慢指针判环、入环点、双指针对齐长度</td>
+              </tr>
+              <tr>
+                <td><strong>模拟加法 / 第 k 小 / 堆</strong></td>
+                <td>2, 445, 264, 378, 373</td>
+                <td>逆序/正序进位；丑数与多路/矩阵/数对的最小值枚举</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source-note">官网题库：<a class="link-accent lc-link" href="https://leetcode.cn/problemset/" rel="noopener noreferrer">leetcode.cn</a></p>
+
+        <hr />
+
+        <h2 id="lc-21"><span class="lc-no">#21</span> Merge Two Sorted Lists · 合并两个有序链表</h2>
+        <p>
+          <span class="lc-tag">链表</span>
+          <a class="link-accent lc-link" href="https://leetcode.cn/problems/merge-two-sorted-lists/" rel="noopener noreferrer">题目链接</a>
+        </p>
+        <p>将两个升序链表合并为一个新的 <strong>升序</strong>链表并返回。新链表由前面两个链表的所有结点拼接而成。</p>
+        <p><strong>约束：</strong>两个链表的结点数目范围均为 <code class="inline">[0, 50]</code>；<code class="inline">-100 &lt;= Node.val &lt;= 100</code>；均按 <strong>非递减顺序</strong>排列。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：list1 = [1,2,4], list2 = [1,3,4]
+输出：[1,1,2,3,4,4]</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：list1 = [], list2 = []
+输出：[]</pre>
+        <h3>示例 3</h3>
+        <pre class="lc-io">输入：list1 = [], list2 = [0]
+输出：[0]</pre>
+
+        <h2 id="lc-86"><span class="lc-no">#86</span> Partition List · 分隔链表</h2>
+        <p><span class="lc-tag">链表</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/partition-list/" rel="noopener noreferrer">题目链接</a></p>
+        <p>给定头结点 <code class="inline">head</code> 与一个值 <code class="inline">x</code>，将链表分隔为两部分：所有 <strong>小于</strong> <code class="inline">x</code> 的结点出现在大于或等于 <code class="inline">x</code> 的结点之前，且两部分内结点<strong>相对顺序不变</strong>。</p>
+        <p><strong>约束：</strong>链表中结点数目在 <code class="inline">[0, 200]</code>；<code class="inline">-100 &lt;= Node.val &lt;= 100</code>；<code class="inline">-200 &lt;= x &lt;= 200</code>。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：head = [1,4,3,2,5,2], x = 3
+输出：[1,2,2,4,3,5]</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：head = [2,1], x = 2
+输出：[1,2]</pre>
+
+        <h2 id="lc-23"><span class="lc-no">#23</span> Merge k Sorted Lists · 合并 K 个升序链表</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">堆</span><span class="lc-tag">分治</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/merge-k-sorted-lists/" rel="noopener noreferrer">题目链接</a></p>
+        <p>给定一个链表数组，每个链表已按升序排列，请将所有链表合并到一个升序链表中并返回。</p>
+        <p><strong>约束：</strong><code class="inline">k == lists.length</code>；<code class="inline">0 &lt;= k &lt;= 10^4</code>；<code class="inline">0 &lt;= lists[i].length &lt;= 500</code>；<code class="inline">-10^4 &lt;= lists[i][j] &lt;= 10^4</code>；总节点数不超过 <code class="inline">10^4</code>。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：lists = [[1,4,5],[1,3,4],[2,6]]
+输出：[1,1,2,3,4,4,5,6]</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：lists = []
+输出：[]</pre>
+        <h3>示例 3</h3>
+        <pre class="lc-io">输入：lists = [[]]
+输出：[]</pre>
+
+        <h2 id="lc-141"><span class="lc-no">#141</span> Linked List Cycle · 环形链表</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">双指针</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/linked-list-cycle/" rel="noopener noreferrer">题目链接</a></p>
+        <p>判断链表中是否存在环。若某结点在链表重新遍历过程中可被再次到达，则存在环。</p>
+        <p><strong>约束：</strong>结点数 <code class="inline">[0, 10^4]</code>；<code class="inline">-10^5 &lt;= Node.val &lt;= 10^5</code>；<code class="inline">pos</code> 为 <code class="inline">-1</code> 或链表中的有效下标（评测用，不在函数参数里）。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：head = [3,2,0,-4], pos = 1
+输出：true
+解释：尾结点连到下标 1（值为 2 的结点），成环。</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：head = [1,2], pos = 0
+输出：true</pre>
+        <h3>示例 3</h3>
+        <pre class="lc-io">输入：head = [1], pos = -1
+输出：false</pre>
+
+        <h2 id="lc-142"><span class="lc-no">#142</span> Linked List Cycle II · 环形链表 II</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">双指针</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/linked-list-cycle-ii/" rel="noopener noreferrer">题目链接</a></p>
+        <p>给定可能带环链表的头结点，若存在环则返回环的<strong>起始结点</strong>；否则返回 <code class="inline">null</code>。</p>
+        <p><strong>约束：</strong>与 141 同量级；<strong>不得修改</strong>链表；<code class="inline">O(1)</code> 额外空间（经典要求）。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：head = [3,2,0,-4], pos = 1
+输出：值为 2 的结点（tail 指向下标 1）</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：head = [1,2], pos = 0
+输出：值为 1 的结点</pre>
+        <h3>示例 3</h3>
+        <pre class="lc-io">输入：head = [1], pos = -1
+输出：null</pre>
+
+        <h2 id="lc-876"><span class="lc-no">#876</span> Middle of the Linked List · 链表的中间结点</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">双指针</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/middle-of-the-linked-list/" rel="noopener noreferrer">题目链接</a></p>
+        <p>返回单链表的<strong>中间结点</strong>。若有<strong>两个</strong>中间结点，返回<strong>第二个</strong>。</p>
+        <p><strong>约束：</strong>结点数 <code class="inline">[1, 100]</code>；<code class="inline">1 &lt;= Node.val &lt;= 100</code>。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：[1,2,3,4,5]
+输出：值为 3 的结点</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：[1,2,3,4,5,6]
+输出：值为 4 的结点</pre>
+
+        <h2 id="lc-19"><span class="lc-no">#19</span> Remove Nth Node From End of List · 删除链表的倒数第 N 个结点</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">双指针</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/remove-nth-node-from-end-of-list/" rel="noopener noreferrer">题目链接</a></p>
+        <p>删除链表的倒数第 <code class="inline">n</code> 个结点，并返回头结点。</p>
+        <p><strong>约束：</strong>链表中结点数 <code class="inline">sz</code> 满足 <code class="inline">1 &lt;= sz &lt;= 30</code>；<code class="inline">0 &lt;= Node.val &lt;= 100</code>；<code class="inline">1 &lt;= n &lt;= sz</code>。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：head = [1,2,3,4,5], n = 2
+输出：[1,2,3,5]</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：head = [1], n = 1
+输出：[]</pre>
+        <h3>示例 3</h3>
+        <pre class="lc-io">输入：head = [1,2], n = 1
+输出：[1]</pre>
+
+        <h2 id="lc-160"><span class="lc-no">#160</span> Intersection of Two Linked Lists · 相交链表</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">双指针</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/intersection-of-two-linked-lists/" rel="noopener noreferrer">题目链接</a></p>
+        <p>给定两个单链表头结点 <code class="inline">headA</code>、<code class="inline">headB</code>，若相交返回<strong>第一个相交结点</strong>；否则 <code class="inline">null</code>。链表中无环；整个运行中保持原结构；<code class="inline">O(1)</code> 内存。</p>
+        <p><strong>约束：</strong>各链表结点数 <code class="inline">m, n</code> 满足 <code class="inline">1 &lt;= m, n &lt;= 3 * 10^4</code>；<code class="inline">1 &lt;= Node.val &lt;= 10^5</code>。</p>
+        <h3>示例 1（相交于结点 8）</h3>
+        <pre class="lc-io">intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+输出：值为 8 的结点</pre>
+        <h3>示例 2（不相交）</h3>
+        <pre class="lc-io">intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
+输出：null</pre>
+
+        <h2 id="lc-264"><span class="lc-no">#264</span> Ugly Number II · 丑数 II</h2>
+        <p><span class="lc-tag">堆</span><span class="lc-tag">多指针</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/ugly-number-ii/" rel="noopener noreferrer">题目链接</a></p>
+        <p><strong>丑数</strong>是只包含质因子 <code class="inline">2、3、5</code> 的<strong>正整数</strong>。给定 <code class="inline">n</code>，返回第 <code class="inline">n</code> 个丑数。</p>
+        <p><strong>约束：</strong><code class="inline">1 &lt;= n &lt;= 1690</code>。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：n = 10
+输出：12
+解释：[1, 2, 3, 4, 5, 6, 8, 9, 10, 12] 为前 10 个丑数。</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：n = 1
+输出：1</pre>
+
+        <h2 id="lc-378"><span class="lc-no">#378</span> Kth Smallest Element in a Sorted Matrix · 有序矩阵中第 K 小的元素</h2>
+        <p><span class="lc-tag">堆</span><span class="lc-tag">二分</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/kth-smallest-element-in-a-sorted-matrix/" rel="noopener noreferrer">题目链接</a></p>
+        <p>给定 <code class="inline">n x n</code> 矩阵，每行每列均按升序排好，返回矩阵中第 <code class="inline">k</code> 小的元素（<strong>非第 k 个不同值</strong>，计重）。</p>
+        <p><strong>约束：</strong><code class="inline">n == matrix.length</code>；<code class="inline">1 &lt;= n &lt;= 300</code>；<code class="inline">-10^9 &lt;= matrix[i][j] &lt;= 10^9</code>；每行每列升序；<code class="inline">1 &lt;= k &lt;= n^2</code>。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：matrix = [[1,5,9],[10,11,13],[12,13,15]], k = 8
+输出：13</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：matrix = [[-5]], k = 1
+输出：-5</pre>
+
+        <h2 id="lc-373"><span class="lc-no">#373</span> Find K Pairs with Smallest Sums · 查找和最小的 K 对数字</h2>
+        <p><span class="lc-tag">堆</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/find-k-pairs-with-smallest-sums/" rel="noopener noreferrer">题目链接</a></p>
+        <p>给定两个以升序排列的整数数组 <code class="inline">nums1</code>、<code class="inline">nums2</code> 和整数 <code class="inline">k</code>，需找到和最小的 <code class="inline">k</code> 对 <code class="inline">(nums1[i], nums2[j])</code>。</p>
+        <p><strong>约束：</strong><code class="inline">1 &lt;= nums1.length, nums2.length &lt;= 10^5</code>；<code class="inline">-10^9 &lt;= nums1[i], nums2[j] &lt;= 10^9</code>；<code class="inline">nums1、nums2</code> 均为升序；<code class="inline">1 &lt;= k &lt;= 10^4</code>；<code class="inline">k &lt;= nums1.length * nums2.length</code>。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：nums1 = [1,7,11], nums2 = [2,4,6], k = 3
+输出：[[1,2],[1,4],[1,6]]</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：nums1 = [1,1,2], nums2 = [1,2,3], k = 2
+输出：[[1,1],[1,1]]</pre>
+
+        <h2 id="lc-82"><span class="lc-no">#82</span> Remove Duplicates from Sorted List II · 删除排序链表中的重复元素 II</h2>
+        <p><span class="lc-tag">链表</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/remove-duplicates-from-sorted-list-ii/" rel="noopener noreferrer">题目链接</a></p>
+        <p>给定已排序链表，删除所有<strong>重复数字</strong>的结点，使结果只保留<strong>出现一次</strong>的数。返回已排序链表。</p>
+        <p><strong>约束：</strong>链表中结点数目 <code class="inline">[0, 300]</code>；<code class="inline">-100 &lt;= Node.val &lt;= 100</code>；链表按升序排。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：head = [1,2,3,3,4,4,5]
+输出：[1,2,5]</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：head = [1,1,1,2,3]
+输出：[2,3]</pre>
+
+        <h2 id="lc-2"><span class="lc-no">#2</span> Add Two Numbers · 两数相加</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">模拟</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/add-two-numbers/" rel="noopener noreferrer">题目链接</a></p>
+        <p>两个非空链表表示两个非负整数，数字<strong>逆序</strong>存储，每位一结点。返回表示和的链表（逆序）。假定无前导零（除数字 0 本身）。</p>
+        <p><strong>约束：</strong>结点数 <code class="inline">[1, 100]</code>；<code class="inline">0 &lt;= Node.val &lt;= 9</code>；除 0 外无前导零。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：l1 = [2,4,3], l2 = [5,6,4]
+输出：[7,0,8]
+解释：342 + 465 = 807</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：l1 = [0], l2 = [0]
+输出：[0]</pre>
+        <h3>示例 3</h3>
+        <pre class="lc-io">输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+输出：[8,9,9,9,0,0,0,1]</pre>
+
+        <h2 id="lc-445"><span class="lc-no">#445</span> Add Two Numbers II · 两数相加 II</h2>
+        <p><span class="lc-tag">链表</span><span class="lc-tag">栈</span> <a class="link-accent lc-link" href="https://leetcode.cn/problems/add-two-numbers-ii/" rel="noopener noreferrer">题目链接</a></p>
+        <p>两个非空链表表示两个非负整数，最高位在链表<strong>头部</strong>。返回表示和的链表（同样高位在前）。假定无前导零。</p>
+        <p><strong>约束：</strong>结点数 <code class="inline">[1, 100]</code>；<code class="inline">0 &lt;= Node.val &lt;= 9</code>；除 0 外无前导零。</p>
+        <h3>示例 1</h3>
+        <pre class="lc-io">输入：l1 = [7,2,4,3], l2 = [5,6,4]
+输出：[7,8,0,7]</pre>
+        <h3>示例 2</h3>
+        <pre class="lc-io">输入：l1 = [2,4,3], l2 = [5,6,4]
+输出：[8,0,7]</pre>
+
+        <p class="guide-footer">完成一题可在学习页「昨日记录」打勾复盘；约束与示例以 LeetCode 官网为准。</p>
+        <p class="source-note">本页为静态整理，若官网题面更新，以官网为准。</p>
+      </article>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-ghost" href="index.html#leetcode-guide">← 返回学习页·学习指南</a>
+      <a class="btn btn-ghost" href="../index.html">首页</a>
+      <a class="btn btn-primary" href="https://github.com/yy834277137/skill-tree" rel="noopener noreferrer">GitHub 仓库</a>
+    </div>
+
+    <footer class="site-footer">doubleyang.club</footer>
+  </div>
+</body>
+</html>

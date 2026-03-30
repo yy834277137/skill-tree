@@ -527,3 +527,36 @@ article.guide-doc .source-note {
   color: var(--muted);
   margin-top: 0.75rem;
 }
+article.guide-doc pre.lc-io {
+  margin: 0.45rem 0 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  color: var(--text);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+article.guide-doc .lc-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  background: rgba(94, 179, 246, 0.12);
+  color: var(--accent);
+  margin-right: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+article.guide-doc .lc-link {
+  font-size: 0.82rem;
+}
+article.guide-doc h2 .lc-no {
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.9em;
+}
