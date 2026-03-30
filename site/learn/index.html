@@ -18,11 +18,12 @@
     <header class="page-header">
       <span class="badge">Learn</span>
       <h1>学习</h1>
-      <p class="subtitle">已掌握知识 · 待拓展与巩固 · 昨日记录 · 今日 Todo</p>
+      <p class="subtitle">已掌握知识 · 待拓展与巩固 · 学习指南与面试指南 · 昨日记录 · 今日 Todo</p>
       <nav class="toc" aria-label="本页目录">
         <a href="#mastered">已掌握</a>
         <a href="#extend">待拓展巩固</a>
         <a href="#guides">学习指南</a>
+        <a href="#interview-guides">面试指南</a>
         <a href="#yesterday">昨日记录</a>
         <a href="#todo">今日 Todo</a>
       </nav>
@@ -60,7 +61,21 @@
     <section class="module" id="guides">
       <h2>学习指南</h2>
       <div class="card">
-        <p>与「昨日记录」类似：<strong>本页只显示概要</strong>，需要全文时进入独立页面阅读。</p>
+        <p>面向<strong>长期知识结构与技能树</strong>的入口，与「面试指南」（针对单次应聘冲刺）区分。</p>
+        <ul class="skills mt-1">
+          <li><strong>学习路径打卡表</strong>：<a class="link-accent" href="https://github.com/yy834277137/skill-tree/blob/master/basic/work/LearningPath/skills_checklist.md" rel="noopener noreferrer">skills_checklist.md</a>（ISP/多媒体/Linux/C++ 等模块自检、每日记录模板）</li>
+          <li><strong>学习追问与备忘</strong>：<a class="link-accent" href="https://github.com/yy834277137/skill-tree/blob/master/basic/work/LearningPath/learning_path_question.md" rel="noopener noreferrer">learning_path_question.md</a></li>
+          <li><strong>简历技能树（Mermaid）</strong>：<a class="link-accent" href="https://github.com/yy834277137/skill-tree/blob/master/basic/work/Resume/resume_skill_tree.md" rel="noopener noreferrer">resume_skill_tree.md</a></li>
+          <li><strong>算法基础专题</strong>：仓库 <code class="inline">basic/work/AlgorithmBasic</code>（与上方「待拓展巩固」一致，此处作为指南入口汇总）</li>
+        </ul>
+        <p>单篇笔记若需像「面试指南」一样全文展示，可做成独立 HTML 页，在本节只保留概要链接。</p>
+      </div>
+    </section>
+
+    <section class="module" id="interview-guides">
+      <h2>面试指南</h2>
+      <div class="card">
+        <p>针对<strong>具体公司与岗位</strong>的冲刺材料：<strong>本页只显示概要</strong>，全文在独立页面打开；源文件可在 GitHub 对比版本。</p>
         <div class="guide-preview">
           <h3 class="guide-preview-title">Insta360 嵌入式多媒体开发 — 面试前学习指南</h3>
           <p class="guide-preview-lead">岗位：影石嵌入式多媒体开发；结合当前简历与 BOSS JD，做面试前对齐与复习倒排。</p>
