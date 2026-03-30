@@ -362,37 +362,64 @@ a.link-accent {
 }
 a.link-accent:hover { text-decoration: underline; }
 
-/* Learn sub-pages: tab strip */
-nav.learn-tabs {
+/* Learn page: guide summary card → full page on click */
+.guide-preview {
+  margin-top: 1rem;
+  padding: 1rem 1.05rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.18);
+}
+.guide-preview-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.45rem;
+  line-height: 1.4;
+}
+.guide-preview-lead {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.55;
+}
+.guide-preview-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+ul.guide-preview-outline {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+ul.guide-preview-outline li {
+  position: relative;
+  padding-left: 1rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+ul.guide-preview-outline li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--warn);
+  opacity: 0.9;
+}
+.guide-preview-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
-  justify-content: center;
-  margin: 0 0 1.35rem;
-}
-nav.learn-tabs a {
-  font-size: 0.86rem;
-  font-weight: 600;
-  text-decoration: none;
-  color: var(--muted);
-  padding: 0.45rem 0.95rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
-}
-nav.learn-tabs a:hover {
-  color: var(--text);
-  border-color: var(--accent-dim);
-  background: rgba(94, 179, 246, 0.08);
-}
-nav.learn-tabs a[aria-current="page"] {
-  color: var(--bg);
-  background: var(--accent);
-  border-color: var(--accent);
-}
-nav.learn-tabs a[aria-current="page"]:hover {
-  background: var(--accent-dim);
-  border-color: var(--accent-dim);
+  gap: 0.55rem;
+  align-items: center;
 }
 
 /* Long-form guide (e.g. Insta360 interview prep) */
