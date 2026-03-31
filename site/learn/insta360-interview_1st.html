@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Insta360 一面模拟：嵌入式/多媒体常见问题与参考答案（按面经节奏）" />
+  <title>Insta360 一面模拟题 · 学习 · 大宝杨的技能树</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="wrap wide">
+    <nav class="site-nav" aria-label="面包屑">
+      <a href="../index.html">首页</a>
+      <span class="sep">/</span>
+      <a href="index.html">学习</a>
+      <span class="sep">/</span>
+      <a href="index.html#interview-guides">面试指南</a>
+      <span class="sep">/</span>
+      <a href="insta360-guide.html">Insta360</a>
+      <span class="sep">/</span>
+      <span>一面模拟</span>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">Interview</span>
+      <h1>Insta360「嵌入式/多媒体」一面模拟题</h1>
+      <p class="subtitle">模仿面经节奏：自我介绍 → 八股连问 → 多媒体链路 → 简历追问 → 反问（含参考答案与追问点）</p>
+      <nav class="toc" aria-label="本页目录">
+        <a href="#s1">开场</a>
+        <a href="#s2">C/C++</a>
+        <a href="#s3">Linux/系统</a>
+        <a href="#s4">多媒体</a>
+        <a href="#s5">简历追问</a>
+        <a href="#s6">反问</a>
+      </nav>
+    </header>
+
+    <div class="card">
+      <article class="guide-doc" id="guide-body">
+        <blockquote>
+          <p><strong>使用方式：</strong>按顺序自测口述。每题先给 <strong>20–40 秒“主回答”</strong>，再选 1–2 个“追问点”补到 <strong>60–90 秒</strong>。一面常见风格是“你答完一句就追一句”。</p>
+          <p><strong>与简历对齐：</strong>参考你当前简历（<code class="inline">basic/work/Resume/resume.tex</code>）：多媒体/图像链路、GStreamer+V4L2、性能优化（500ms→30ms/70ms）、自动化回归与算法落地。</p>
+        </blockquote>
+
+        <h2 id="s1">1）开场与基础情况（1–3 分钟）</h2>
+
+        <h3>Q1. 自我介绍（要求一句话讲清项目）</h3>
+        <p><strong>主回答（示例稿，60 秒以内）：</strong></p>
+        <p>我主要做嵌入式 Linux 上的图像与多媒体链路工程化落地，经历包括海康睿影的安检成像链路与算法产品化，以及华航高科阶段基于 RK 平台做板级适配、用 GStreamer+V4L2 做摄像头调试。我的优势是把“算法/成像效果”落到“可跑可测可量产”的流水线上：我搭过系统级冒烟/自动化回归，做过畸变校正、背散射链路适配，也做过关键路径性能优化，X86 单帧从约 500ms 优化到约 30ms，RK 到约 70ms，并且稳定交付。</p>
+        <p><strong>追问点（准备 2 句）：</strong>你负责的模块边界？数据流怎么走？你量化的指标怎么定义（帧耗时/内存/带宽/掉帧率）？</p>
+
+        <h3>Q2. 毕业/到岗/稳定时长？</h3>
+        <p><strong>主回答：</strong>一句话给“最早到岗时间 + 最长稳定周期”。避免讲模糊词，直接给日期/周数。</p>
+        <p><strong>追问点：</strong>若需要提前到岗或远程，你的可行性与限制是什么？</p>
+
+        <h3>Q3. C 和 C++ 哪个更熟？</h3>
+        <p><strong>主回答：</strong>我主力是 C/C++，工程里偏 C++ 的资源管理与性能优化（RAII、并行、SIMD），同时也能写 C 风格接口做底层对接；如果一面要快节奏八股，我可以按 C 的内存模型和指针来回答。</p>
+
+        <hr />
+
+        <h2 id="s2">2）C/C++ 基础八股（高频连问）</h2>
+
+        <h3>Q1. 指针和数组有什么区别？</h3>
+        <p><strong>主回答：</strong>数组是“连续元素”的对象，类型里带长度；指针是变量，存的是地址。表达式里数组名常退化为指针传参，但 <code class="inline">sizeof(arr)</code> 是数组总大小，<code class="inline">sizeof(p)</code> 是指针大小；<code class="inline">&amp;arr</code> 的类型是“指向整个数组的指针”。</p>
+        <p><strong>追问点：</strong>函数形参里的 <code class="inline">int a[]</code> 实际是什么？为什么不能在形参里用 <code class="inline">sizeof</code> 得到数组长度？</p>
+
+        <h3>Q2. <code class="inline">typedef</code> 和 <code class="inline">#define</code> 的区别？</h3>
+        <p><strong>主回答：</strong><code class="inline">typedef</code> 是类型别名，参与编译期类型检查、受作用域影响；<code class="inline">#define</code> 是预处理文本替换，不做类型检查，容易有宏副作用。工程里我更倾向用 <code class="inline">constexpr</code>/<code class="inline">inline</code> 函数替代宏常量/宏函数。</p>
+        <p><strong>追问点：</strong>宏函数怎么避免多次求值？为什么会用 <code class="inline">do { ... } while(0)</code>？</p>
+
+        <h3>Q3. 结构体和联合体（union）区别？</h3>
+        <p><strong>主回答：</strong>struct 的成员各自占空间；union 的成员共享同一块内存，大小取最大成员并受对齐影响。union 需要你在逻辑上维护“当前有效成员”。</p>
+        <p><strong>追问点：</strong>对齐规则怎么影响大小？什么时候 union 有用（节省内存、协议解析）？</p>
+
+        <h3>Q4. 野指针 vs 悬垂指针？怎么避免？</h3>
+        <p><strong>主回答：</strong>野指针是未初始化就使用；悬垂指针是指向已释放或已出作用域对象。避免方法：初始化为 <code class="inline">nullptr</code>，释放后置空；明确所有权；C++ 用 RAII/智能指针管理资源，减少手写 <code class="inline">new/delete</code>。</p>
+        <p><strong>追问点：</strong>shared_ptr 循环引用怎么解决？（weak_ptr）</p>
+
+        <h3>Q5. 堆和栈区别？常见问题怎么排？</h3>
+        <p><strong>主回答：</strong>栈用于函数调用帧，自动分配释放，速度快但空间有限，容易栈溢出；堆用于动态分配，生命周期灵活但易碎片、泄漏。排查栈溢出看递归/大对象局部变量；排查堆泄漏/越界用 ASan/valgrind、最小复现与日志定位。</p>
+
+        <h3>Q6. C/进程内存分布？各段放什么？</h3>
+        <p><strong>主回答：</strong>text/rodata 放代码与只读常量；data 放已初始化全局静态；bss 放未初始化全局静态（启动清零）；heap 动态分配；stack 调用帧与局部变量。面试里我会强调“段是编译/链接/装载共同决定的”，并且解释为什么 bss 不占可执行文件空间。</p>
+
+        <h3>Q7. C/C++ 编译过程？（可能追问静/动库）</h3>
+        <p><strong>主回答：</strong>预处理（宏、include）→ 编译（生成汇编）→ 汇编（.o，符号表+重定位）→ 链接（符号解析+重定位，产出可执行/so）。静态库把代码打包进最终可执行；动态库运行时装载，体积小但要处理依赖与版本。</p>
+        <p><strong>追问点：</strong>链接顺序为什么会影响静态库？动态库找不到怎么办（rpath/LD_LIBRARY_PATH）？</p>
+
+        <hr />
+
+        <h2 id="s3">3）Linux / 系统 / 并发（八股常见）</h2>
+
+        <h3>Q1. Linux 进程 vs 线程？</h3>
+        <p><strong>主回答：</strong>进程有独立地址空间与资源隔离；线程共享进程地址空间与打开文件等资源，但每个线程有独立栈与寄存器上下文。调度单位在 Linux 上表现为 task（线程也可被调度）。</p>
+
+        <h3>Q2. IPC 有哪些？什么时候用？</h3>
+        <p><strong>主回答：</strong>管道/命名管道、消息队列、共享内存、信号、socket。控制命令和少量数据用队列/管道；大数据吞吐用共享内存（再配合锁/环形队列）；跨网络或跨机用 socket。</p>
+
+        <h3>Q3. 线程同步怎么做？互斥/信号量/条件变量区别？</h3>
+        <p><strong>主回答：</strong>互斥锁保护临界区；信号量表示资源计数；条件变量用于“等待条件满足”，配合互斥锁用 while 检查条件避免虚假唤醒。实际工程我会优先减少共享状态，必要时用队列把共享降到最小。</p>
+
+        <h3>Q4. 死锁是什么？怎么避免？</h3>
+        <p><strong>主回答：</strong>死锁满足互斥、占有等待、不可抢占、循环等待。避免：统一加锁顺序、缩小持锁范围、trylock+超时、拆分锁粒度、避免锁内调用外部未知逻辑。</p>
+
+        <h3>Q5.（若提到 RTOS/中断）你怎么理解调度/任务切换？</h3>
+        <p><strong>主回答：</strong>用“任务状态 + 就绪队列 + tick/中断触发切换”讲清楚；强调优先级反转与优先级继承。Linux 下再补一句：调度器/等待队列/抢占点决定延迟与吞吐。</p>
+
+        <hr />
+
+        <h2 id="s4">4）多媒体 / 相机链路（JD 强相关）</h2>
+
+        <h3>Q1. 从摄像头采集到显示的流程？（按 V4L2 讲）</h3>
+        <p><strong>主回答：</strong>打开设备 → 设定格式/分辨率（VIDIOC_S_FMT）→ 申请 buffer（REQBUFS）→ mmap 映射 → QBUF 入队 → STREAMON 开始采集 → 循环 DQBUF 拿到帧 →（可选：处理/转换）→ 显示/编码 → QBUF 归还 buffer → STREAMOFF 结束。</p>
+        <p><strong>追问点：</strong>mmap/userptr/dmabuf 区别？如何做零拷贝？如何定位掉帧（打点、队列长度、带宽）？</p>
+
+        <h3>Q2. 帧率是什么？1080p 是什么意思？</h3>
+        <p><strong>主回答：</strong>帧率是每秒输出帧数；1080p 通常指 1920×1080 的逐行扫描画面（progressive）。工程上要把“帧率目标”拆成采集、处理、编码、显示各段预算。</p>
+
+        <h3>Q3. 为什么选 GStreamer？好处是什么？</h3>
+        <p><strong>主回答：</strong>GStreamer 是可插拔 pipeline：element/pad/caps 协商清晰；插件生态丰富；易于把采集、编解码、显示串起来；也方便把自研算法塞进 appsink/appsrc 或自定义 plugin 做集成与调试。</p>
+
+        <h3>Q4.（若问编解码）你怎么理解 H.264？</h3>
+        <p><strong>主回答：</strong>按 I/P/B 帧、GOP、参考帧与码率/延迟关系讲；再说 NALU、码流与封装（MP4）区别；最后落到工程：硬编/软编取舍、B 帧对延迟影响。</p>
+
+        <hr />
+
+        <h2 id="s5">5）结合简历追问（深挖 1–2 个点）</h2>
+
+        <h3>Q1. “全屏成像链路优化 500ms→30ms/70ms”怎么定位瓶颈？怎么量化？</h3>
+        <p><strong>主回答结构（按这 5 句说）：</strong></p>
+        <ul class="checklist">
+          <li>先<strong>定义指标</strong>：单帧耗时（端到端/关键路径）、CPU 占用、内存峰值、掉帧率。</li>
+          <li>用 perf/valgrind/自研打点确定<strong>热点与瓶颈类型</strong>（算力/访存/锁/拷贝）。</li>
+          <li>对访存：看 cache miss、带宽；对算力：看向量化机会；对并发：拆流水、降低临界区。</li>
+          <li>实施：OpenMP 并行 + SIMD + 数据布局/拷贝减少；每步都 A/B 对比。</li>
+          <li>回归：加自动化用例与长期稳定测试，确保“快了但不炸”。</li>
+        </ul>
+        <p><strong>追问点：</strong>你改了哪些数据结构？怎么验证“正确性没变”？为什么 X86/ARM 加速比不同？</p>
+
+        <h3>Q2. 畸变校正/背散射/双能着色这类算法落地：数据流怎么走？放在哪一层？为什么？</h3>
+        <p><strong>主回答：</strong>按“输入→处理→输出→落点理由”讲。落点理由用 5 维：实时性、带宽、功耗、开发复杂度、可维护性。强调你做的是“工程化流水”，比如查表 remap/插值、条带处理、扩边缓存等。</p>
+        <p><strong>追问点：</strong>畸变表怎么生成/标定？重映射插值的代价怎么控？</p>
+
+        <h3>Q3. 测试框架/冒烟回归怎么设计？怎么保证稳定？</h3>
+        <p><strong>主回答：</strong>说明测试分层（单元/模块/系统）、覆盖面（显示/编解码/XSP 算法模块）、触发方式（脚本/CI/定时回归）、以及失败定位（日志/版本对比/最小复现）。强调“能长期跑、能定位、能拦截回归”。</p>
+
+        <h3>Q4. GStreamer+V4L2 摄像头调试：花屏/掉帧/格式不匹配怎么排？</h3>
+        <p><strong>主回答：</strong>先看格式协商（分辨率/像素格式/stride/颜色空间）→ 再看 buffer 流程（队列是否堵、DQBUF 超时）→ 再看带宽/拷贝（mmap/dmabuf）→ 再看时钟/帧率与驱动日志；必要时用最小 pipeline 验证采集端是否稳定。</p>
+
+        <hr />
+
+        <h2 id="s6">6）反问（面试官也会反问你）</h2>
+
+        <h3>Q1. 你对影石了解吗？为什么想来？</h3>
+        <p><strong>主回答（建议口径）：</strong>影石是影像硬件与算法结合很深的公司，工程上对“链路、性能、稳定性、功耗/热”要求高。我希望做更贴近消费影像产品的多媒体链路，把我在成像流水工程化、性能优化与回归体系上的经验迁移过来，尤其是 Camera pipeline、编解码与系统稳定性方向。</p>
+
+        <h3>Q2. 你更偏多媒体链路还是 GUI/业务？未来规划？</h3>
+        <p><strong>主回答：</strong>我更偏多媒体/成像链路与性能稳定性这条线：采集→处理→编码/显示→测试回归。我希望 3–6 个月能把某段 pipeline 跑稳并做出量化优化，之后在架构层面承担模块拆分与跨团队联调。</p>
+
+        <h3>你可以反问面试官（准备 2–3 个）</h3>
+        <ul class="checklist">
+          <li>团队的主要产品线与 SoC/框架选型（GStreamer/自研框架/硬编接口）？新人最常接手 pipeline 的哪一段？</li>
+          <li>当前性能/稳定性最痛的点是什么（掉帧、延迟、功耗、温升、兼容）？评估指标如何量化？</li>
+          <li>面试通过后，岗位更偏“业务交付”还是“框架与性能基建”？试用期目标通常怎么定？</li>
+        </ul>
+
+        <p class="source-note">来源风格参考：牛客影石嵌入式一面（纯八股、编译过程、内存分布、IPC、调度、V4L2/GStreamer 等）。</p>
+      </article>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-ghost" href="insta360-guide.html">← 返回 Insta360 面试指南</a>
+      <a class="btn btn-ghost" href="index.html#interview-guides">学习页·面试指南</a>
+      <a class="btn btn-primary" href="https://github.com/yy834277137/skill-tree" rel="noopener noreferrer">GitHub 仓库</a>
+    </div>
+
+    <footer class="site-footer">doubleyang.club</footer>
+  </div>
+</body>
+</html>
+
