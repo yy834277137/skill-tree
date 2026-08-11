@@ -3,33 +3,54 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="大宝杨的技能树 — 工作与生活入口" />
-  <title>大宝杨的技能树</title>
+  <meta name="description" content="doubleyang.club — 大宝杨的个人站点" />
+  <title>doubleyang.club</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 500px) {
+      .nav-grid { grid-template-columns: 1fr; }
+    }
+    a.card-block {
+      text-align: center;
+      padding: 2rem 1.25rem;
+    }
+    a.card-block h2 {
+      font-size: 1.25rem;
+    }
+    a.card-block .icon {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+  </style>
 </head>
 <body>
   <div class="wrap wide">
     <header class="page-header">
-      <span class="badge">SkillTree</span>
-      <h1>大宝杨的技能树</h1>
-      <p class="subtitle">工作与生活的简要入口 · 详情请进入对应页面</p>
+      <span class="badge">doubleyang.club</span>
+      <h1>大宝杨的个人站点</h1>
+      <p class="subtitle">选择你要访问的页面</p>
     </header>
 
-    <div class="overview-grid cols-2">
+    <div class="nav-grid">
       <a class="card-block" href="work/index.html">
-        <h2>工作</h2>
-        <p>嵌入式软件方向，现任海康睿影；涉及安检成像、图像与多媒体链路、性能与工程化。详情见工作页：完整简历、目前岗位职责与项目侧重。</p>
-        <span class="more">进入工作 →</span>
+        <span class="icon"></span>
+        <h2>技能树</h2>
+        <p>工作与学习记录，嵌入式软件、算法、面试准备等</p>
+        <span class="more">进入 →</span>
       </a>
-      <a class="card-block" href="life/index.html">
-        <h2>生活</h2>
-        <p>阅读以《毛泽东选集》为主线：笔记落在仓库 <code class="inline">basic/life/book</code>，当前精读《毛选》第二卷抗日战争时期相关篇目（含结构化解构与 Mermaid 图）。运动与日常备忘见生活页。</p>
-        <span class="more">进入生活 →</span>
+      <a class="card-block" href="wedding/index.html">
+        <span class="icon"></span>
+        <h2>婚礼请柬</h2>
+        <p>杨大宝 &amp; XXX 的婚礼邀请，查看详情与登记</p>
+        <span class="more">进入 →</span>
       </a>
-    </div>
-
-    <div class="actions">
-      <a class="btn btn-primary" href="https://github.com/yy834277137/skill-tree" rel="noopener noreferrer">GitHub 仓库</a>
     </div>
 
     <footer class="site-footer">doubleyang.club</footer>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="杨大宝 &amp; XXX 的婚礼邀请" />
+  <title>杨大宝 &amp; XXX · 婚礼请柬</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- 全屏背景轮播 -->
+  <div class="slideshow">
+    <div class="slide active" style="background-image: url('photos/01.jpg')"></div>
+    <div class="slide" style="background-image: url('photos/02.jpg')"></div>
+    <div class="slide" style="background-image: url('photos/03.jpg')"></div>
+    <div class="slide" style="background-image: url('photos/04.jpg')"></div>
+  </div>
+
+  <!-- 遮罩层 -->
+  <div class="overlay"></div>
+
+  <!-- 花瓣容器 -->
+  <div class="petals" id="petals"></div>
+
+  <!-- 音乐控制 -->
+  <button class="music-btn paused" id="musicBtn" title="播放音乐">
+    <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+    <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/></svg>
+  </button>
+
+  <!-- 主内容 -->
+  <main class="content">
+
+    <!-- 新人名字 & 日期 -->
+    <section class="hero">
+      <p class="hero-date">2026 · 夏</p>
+      <h1 class="hero-names">杨大宝 <span class="amp">&amp;</span> XXX</h1>
+      <p class="hero-invite">诚挚邀请您参加我们的婚礼</p>
+      <div class="hero-divider"></div>
+      <div class="countdown" id="countdown">
+        <div class="cd-item"><span class="cd-num" id="cd-days">00</span><span class="cd-label">天</span></div>
+        <div class="cd-item"><span class="cd-num" id="cd-hours">00</span><span class="cd-label">时</span></div>
+        <div class="cd-item"><span class="cd-num" id="cd-mins">00</span><span class="cd-label">分</span></div>
+        <div class="cd-item"><span class="cd-num" id="cd-secs">00</span><span class="cd-label">秒</span></div>
+      </div>
+    </section>
+
+    <!-- 轮播指示器 -->
+    <div class="slide-dots" id="slideDots">
+      <span class="dot active" data-index="0"></span>
+      <span class="dot" data-index="1"></span>
+      <span class="dot" data-index="2"></span>
+      <span class="dot" data-index="3"></span>
+    </div>
+
+    <!-- 地点 & 地图 -->
+    <section class="location" id="location">
+      <h2>婚礼地点</h2>
+      <div class="loc-card">
+        <div class="loc-info">
+          <p class="loc-name">XX 酒店 · XX 厅</p>
+          <p class="loc-addr">XX省XX市XX区XX路XX号</p>
+          <p class="loc-time">2026年X月X日 上午 10:00</p>
+          <a class="loc-nav" href="https://uri.amap.com/navigation?to=0,0,XX酒店" target="_blank" rel="noopener">
+            一键导航 →
+          </a>
+        </div>
+        <div class="loc-map">
+          <!-- 高德地图 iframe，替换为你酒店的经纬度 -->
+          <iframe
+            src="https://uri.amap.com/marker?position=0,0&name=XX酒店"
+            width="100%" height="260" frameborder="0"
+            style="border-radius:12px" allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- 照片画廊 -->
+    <section class="gallery" id="gallery">
+      <h2>我们的瞬间</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="photos/01.jpg" alt="" loading="lazy" /></div>
+        <div class="gallery-item"><img src="photos/02.jpg" alt="" loading="lazy" /></div>
+        <div class="gallery-item"><img src="photos/03.jpg" alt="" loading="lazy" /></div>
+        <div class="gallery-item"><img src="photos/04.jpg" alt="" loading="lazy" /></div>
+        <div class="gallery-item"><img src="photos/01.jpg" alt="" loading="lazy" /></div>
+        <div class="gallery-item"><img src="photos/02.jpg" alt="" loading="lazy" /></div>
+      </div>
+    </section>
+
+    <!-- 来宾登记 -->
+    <section class="rsvp" id="rsvp">
+      <h2>来宾登记</h2>
+      <p class="rsvp-desc">请留下您的信息，方便我们统计安排</p>
+      <!-- 表单提交到腾讯收集表或 Cloudflare Worker 代理 -->
+      <form class="rsvp-form" id="rsvpForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">您的姓名 <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="请输入姓名" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">手机号码</label>
+            <input type="tel" id="phone" name="phone" placeholder="选填" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="guests">同行人数</label>
+            <select id="guests" name="guests">
+              <option value="1">1 人</option>
+              <option value="2" selected>2 人</option>
+              <option value="3">3 人</option>
+              <option value="4">4 人</option>
+              <option value="5+">5 人以上</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="relation">与新人的关系</label>
+            <select id="relation" name="relation">
+              <option value="">请选择</option>
+              <option value="family">家人亲戚</option>
+              <option value="friend">朋友</option>
+              <option value="colleague">同事</option>
+              <option value="classmate">同学</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label for="message">祝福的话</label>
+          <textarea id="message" name="message" rows="3" placeholder="写下您对新人的祝福…"></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text">提交登记</span>
+          <span class="btn-spinner"></span>
+        </button>
+      </form>
+      <p class="form-hint" id="formHint"></p>
+    </section>
+
+    <footer class="wedding-footer">
+      <p>执子之手，与子偕老</p>
+      <p class="footer-credit">doubleyang.club</p>
+    </footer>
+
+  </main>
+
+  <!-- 音频 -->
+  <audio id="bgMusic" loop preload="none">
+    <source src="music/bg.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
